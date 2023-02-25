@@ -8,4 +8,4 @@ Jogo desenvolvido em p5.js inspirado em jogos de pong
 <a href="https://editor.p5js.org/EduT3/sketches/vT_dRSnxt">Link do jogo com editor</a> 
 
 
-Dentro do codigo na linha 171 tem a versão de 2 jogadores, só tirar os traços de comentário
+Dentro do codigo sketch.js na linha 171 tem a versão de 2 jogadores, só tirar os traços de comentário(//).
