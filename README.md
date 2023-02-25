@@ -9,16 +9,14 @@ Jogo desenvolvido em p5.js inspirado em jogos de pong
 
 
 Dentro do codigo na linha 171 tem a versão de 2 jogadores, só tirar os traços de comentário
-´´´´´´
-//multiplayer
-//function movimentaRaqueteOponente(){
-//    if (keyIsDown(87)){
-//        yRaqueteOponente -= 10;
-//   }
-//    if (keyIsDown(83)){
-//       yRaqueteOponente += 10;
-//   }
-//
-//}
 
-´´´´´´
+
+//multiplayer
+
+function movimentaRaqueteOponente(){
+  if (keyIsDown(87)){
+      yRaqueteOponente -= 10;
+ }
+  if (keyIsDown(83)){
+     yRaqueteOponente += 10;
+}
