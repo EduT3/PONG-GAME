@@ -1,7 +1,7 @@
-html, body {
-  margin: 0;
-  padding: 0;
-}
-canvas {
-  display: block;
-}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 1.25rem; background: #101727; color: #f4f7ff; font: 1rem/1.5 system-ui, sans-serif; }
+main { max-width: 650px; margin: auto; text-align: center; }
+h1 { font-size: clamp(2rem, 8vw, 4rem); margin: 0; }
+canvas { display: block; max-width: 100%; height: auto !important; border: 2px solid #f5a623; border-radius: 8px; touch-action: none; }
+button { min-height: 44px; padding: .7rem 2rem; border: 0; border-radius: 8px; background: #f5a623; color: #101727; font: inherit; font-weight: bold; cursor: pointer; }
+:focus-visible { outline: 3px solid white; outline-offset: 4px; }

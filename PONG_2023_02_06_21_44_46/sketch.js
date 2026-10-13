@@ -1,3 +1,4 @@
+let jogando = false;
 //variaveis da bolinha
 let xBolinha = 300;
 let yBolinha = 200;
@@ -41,14 +42,17 @@ function preload(){
 
 //tela e som de fundo
 function setup() {
-  createCanvas(600,400);
-  trilha.loop();
+  const tela = createCanvas(600,400);
+  tela.parent("jogo");
+  tela.elt.setAttribute("aria-label", "Campo do jogo Pong. Use as setas para controlar a raquete.");
+  document.getElementById("iniciar").addEventListener("click", alternarJogo);
 }
 
 
 function draw() {
   background(0);
   mostraBolinha();
+  if (!jogando) { incluiPlacar(); return; }
   movimentaBolinha();
   verificaColisaoBorda();
   mostrarRaquete(xRaquete,yRaquete);
@@ -64,7 +68,7 @@ function draw() {
 //movimentação da raquete do oponente
 function movimentaRaqueteOponente(){
   velocidadeYOponente = yBolinha -yRaqueteOponente - raqueteComprimento / 2 - 30;
-  yRaqueteOponente += velocidadeYOponente + chanceDeErrar
+  yRaqueteOponente = constrain(yRaqueteOponente + velocidadeYOponente + chanceDeErrar, 0, height - raqueteAltura);
   calculaChanceDeErrar()
 }
 
@@ -96,18 +100,17 @@ function movimentaBolinha(){
 
 //colisão da bolinha com a borda
 function verificaColisaoBorda(){
-    if(xBolinha + raio > width || xBolinha - raio < 0){
-    velocidadeXBolinha *= -1;
-  }
+
    if(yBolinha + raio > height || yBolinha - raio < 0){
     velocidadeYBolinha *= -1;
+    yBolinha = constrain(yBolinha, raio, height - raio);
   }
 }
 
 //bolinha presa
 function bolinhaNaoFicaPresa(){
-    if (XBolinha - raio < 0){
-    XBolinha = 23
+    if (xBolinha - raio < 0){
+    xBolinha = 23
     }
 }
 
@@ -126,6 +129,7 @@ function movimentaMinhaRaquete() {
     if (keyIsDown(DOWN_ARROW)) {
         yRaquete += 10;
     }
+    yRaquete = constrain(yRaquete, 0, height - raqueteAltura);
 }
 
 //colisão das raquetes 
@@ -133,8 +137,8 @@ function verificaColisaoRaquete(x,y){
 
   colidiu = 
   
-  collideRectCircle(x, y, raqueteComprimento, raqueteAltura, xBolinha, yBolinha, raio);
-  if(colidiu){
+  collideRectCircle(x, y, raqueteComprimento, raqueteAltura, xBolinha, yBolinha, diametro);
+  if(colidiu && ((x < width / 2 && velocidadeXBolinha < 0) || (x > width / 2 && velocidadeXBolinha > 0))){
     velocidadeXBolinha *= -1;
     
     raquetada.play();
@@ -158,13 +162,15 @@ function incluiPlacar() {
 
 //marcar pontos
 function marcaPonto(){
-  if(xBolinha > 590){
+  if(xBolinha - raio > width){
     meusPontos += 1;
     ponto.play();
+    reiniciarBolinha();
   }
-  if(xBolinha < 10){
+  if(xBolinha + raio < 0){
     pontosOponente += 1;
     ponto.play();
+    reiniciarBolinha();
   }
 }
 
@@ -186,3 +192,26 @@ function marcaPonto(){
 
 
 
+
+function reiniciarBolinha() {
+  xBolinha = width / 2; yBolinha = height / 2;
+  velocidadeXBolinha *= -1;
+  document.getElementById("placar").textContent = `Você ${meusPontos} × ${pontosOponente} Computador`;
+}
+function alternarJogo() {
+  jogando = !jogando;
+  document.getElementById("iniciar").textContent = jogando ? "Pausar" : "Jogar";
+  if (jogando) { userStartAudio(); if (!trilha.isPlaying()) trilha.loop(); }
+  else trilha.pause();
+}
+function keyPressed() {
+  if (keyCode === 32 && document.activeElement.tagName !== "BUTTON") { alternarJogo(); return false; }
+  if (keyCode === UP_ARROW || keyCode === DOWN_ARROW) return false;
+}
+function mouseDragged() {
+  if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
+    yRaquete = constrain(mouseY - raqueteAltura / 2, 0, height - raqueteAltura);
+    return false;
+  }
+}
+function touchMoved() { return mouseDragged(); }

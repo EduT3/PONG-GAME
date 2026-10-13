@@ -1,17 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.sound.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <meta charset="utf-8" />
-
-  </head>
-  <body>
-    <main>
-    </main>
-    <script src="sketch.js">
- </script>
-        <script src="p5.collide2d.js">
-  </body>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pong | JavaScript e p5.js</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="p5.js"></script>
+  <script src="p5.sound.min.js"></script>
+  <script src="p5.collide2d.js"></script>
+</head>
+<body>
+  <main>
+    <h1>Pong</h1>
+    <p>Use ↑ e ↓ ou arraste dentro do campo para mover sua raquete.</p>
+    <p>Pressione espaço para pausar. O som começa após tocar em Jogar.</p>
+    <button id="iniciar" type="button">Jogar</button>
+    <p id="placar" role="status">Você 0 × 0 Computador</p>
+    <div id="jogo"></div>
+  </main>
+  <script src="sketch.js"></script>
+</body>
 </html>
